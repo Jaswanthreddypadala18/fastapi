@@ -1,70 +1,54 @@
-pipeline{
+
+pipeline {
     agent any
 
-      environment {
+    environment {
         APP_NAME = "fastapi-app"
-        
-
-        stages{
-            stage('checkout'){
-                step{
-                    git 'https://github.com/Jaswanthreddypadala18/fastapi.git'
-
-            stage('build'){
-                step{
-                    sh 'pip install -r Requirements.txt'
-                        'pip install pytest'
-                        'python --version'
-
-                echo: 'building is done' 
-
-            stage('test'){
-                step{
-                    
-                     sh 'pytest'
-
-                echo 'testing done'
-            
-            stage('running'){
-                step{
-                    sh 'uvicorn main:app --host 0.0.0.0 --port 8000 '
-                echo 'app is working good '
-
-
-     
-        post {
-            always {
-                 echo "Pipeline Completed"
-        }
-        success {
-            echo "Build Success "
-        }
-        failure {
-            echo "Build Failed "
-        }
-
-        
-                }
-            }
-            
-                }
-            }
-
-
-                }
-                
-           
-            }
-                }
-            }
-
-        }
-
-
-
     }
 
-    
+    stages {
 
-    
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/Jaswanthreddypadala18/fastapi.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'pip install -r requirements.txt'
+                sh 'pip install pytest'
+                sh 'python --version'
+                echo 'Building is done'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'pytest'
+                echo 'Testing done'
+            }
+        }
+
+        stage('Run') {
+            steps {
+                sh 'uvicorn main:app --host 0.0.0.0 --port 8000 &'
+                echo 'App is running'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Pipeline Completed"
+        }
+        success {
+            echo "Build Success"
+        }
+        failure {
+            echo "Build Failed"
+        }
+    }
 }
+
+
