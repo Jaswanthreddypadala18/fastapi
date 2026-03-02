@@ -1,0 +1,6 @@
+random
+fastapi-app
+sqlalchemy
+FastAPI
+re
+uvicorn
