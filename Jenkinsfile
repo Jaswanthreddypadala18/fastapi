@@ -32,9 +32,11 @@ pipeline {
         }
 
         stage('Run') {
-            steps {
-                sh 'nohup uvicorn main:app --host 0.0.0.0 --port 8000 &'
-            }
+    steps {
+        sh 'nohup python3 -m uvicorn main:app --host 0.0.0.0 --port 8000 &'
+        echo 'App is running'
+    }
+}
         }
     }
 
@@ -44,6 +46,7 @@ pipeline {
         }
     }
 }
+
 
 
 
