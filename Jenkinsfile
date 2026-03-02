@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -16,23 +15,23 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'pip install -r Requirements.txt'
-                sh 'pip install pytest'
-                sh 'python --version'
+                sh 'python3 -m pip install -r Requirements.txt'
+                sh 'python3 -m pip install pytest'
+                sh 'python3 --version'
                 echo 'Building is done'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'pytest'
+                sh 'python3 -m pytest'
                 echo 'Testing done'
             }
         }
 
         stage('Run') {
             steps {
-                sh 'uvicorn main:app --host 0.0.0.0 --port 8000 &'
+                sh 'nohup uvicorn main:app --host 0.0.0.0 --port 8000 &'
                 echo 'App is running'
             }
         }
