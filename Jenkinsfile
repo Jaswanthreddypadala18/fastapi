@@ -16,7 +16,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'pip install -r requirements.txt'
+                sh 'pip install -r Requirements.txt'
                 sh 'pip install pytest'
                 sh 'python --version'
                 echo 'Building is done'
@@ -50,5 +50,6 @@ pipeline {
         }
     }
 }
+
 
 
