@@ -1,12 +1,10 @@
-
 pipeline {
     
     agent any
 
     environment {
         APP_NAME = "fastapi-app"
-       DATABASE = "mysql+pymysql://root:Jaswanth09@127.0.0.1:3306/candidates"
-
+        DATABASE_URL = "mysql+pymysql://root:Jaswanth09@127.0.0.1:3306/candidates"
     }
 
     stages {
@@ -32,11 +30,10 @@ pipeline {
         }
 
         stage('Run') {
-    steps {
-        sh 'nohup python3 -m uvicorn main:app --host 0.0.0.0 --port 8000 &'
-        echo 'App is running'
-    }
-}
+            steps {
+                sh 'nohup python3 -m uvicorn main:app --host 0.0.0.0 --port 8000 &'
+                echo 'App is running'
+            }
         }
     }
 
@@ -46,6 +43,8 @@ pipeline {
         }
     }
 }
+    
+
 
 
 
