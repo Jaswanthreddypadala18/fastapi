@@ -1,6 +1,5 @@
-random
-fastapi-app
-sqlalchemy
-FastAPI
-re
+fastapi
 uvicorn
+pydantic
+sqlalchemy
+pytest
