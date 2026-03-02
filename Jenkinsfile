@@ -5,7 +5,8 @@ pipeline {
 
     environment {
         APP_NAME = "fastapi-app"
-        DATABASE_URL = "sqlite:///./test.db"
+       DATABASE = "mysql+pymysql://root:Jaswanth09@127.0.0.1:3306/candidates"
+
     }
 
     stages {
@@ -43,6 +44,7 @@ pipeline {
         }
     }
 }
+
 
 
 
