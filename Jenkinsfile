@@ -4,6 +4,7 @@ pipeline {
 
     environment {
         APP_NAME = "fastapi-app"
+        DATABASE_URL = "mysql+pymysql://root:Jaswanth09@127.0.0.1:3306/candidates
     }
 
     stages {
@@ -11,7 +12,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git 'https://github.com/Jaswanthreddypadala18/fastapi.git'
-                DATABASE_URL = "mysql+pymysql://root:Jaswanth09@127.0.0.1:3306/candidates"
+                
                 
             }
         }
@@ -52,6 +53,7 @@ pipeline {
         }
     }
 }
+
 
 
 
