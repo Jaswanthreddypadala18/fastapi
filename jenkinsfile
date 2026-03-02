@@ -3,6 +3,7 @@ pipeline{
 
       environment {
         APP_NAME = "fastapi-app"
+        
 
         stages{
             stage('checkout'){
@@ -11,7 +12,7 @@ pipeline{
 
             stage('build'){
                 step{
-                    sh 'pip install -r requirements.txt'
+                    sh 'pip install -r Requirements.txt'
                         'pip install pytest'
                         'python --version'
 
@@ -27,6 +28,7 @@ pipeline{
             stage('running'){
                 step{
                     sh 'uvicorn main:app --host 0.0.0.0 --port 8000 '
+                echo 'app is working good '
 
 
      
