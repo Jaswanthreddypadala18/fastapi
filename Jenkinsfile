@@ -1,5 +1,5 @@
 pipeline {
-    
+
     agent any
 
     environment {
@@ -17,7 +17,8 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'python3 -m pip install -r Requirements.txt'
+                sh 'python3 -m pip install --upgrade pip'
+                sh 'python3 -m pip install -r requirements.txt'
                 sh 'python3 -m pip install pytest'
                 sh 'python3 --version'
             }
@@ -29,10 +30,19 @@ pipeline {
             }
         }
 
-        stage('Run') {
+        stage('Docker Build') {
             steps {
-                sh 'nohup python3 -m uvicorn main:app --host 0.0.0.0 --port 8000 &'
-                echo 'App is running'
+                sh 'docker build -t $APP_NAME .'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                docker stop fastapi-container || true
+                docker rm fastapi-container || true
+                docker run -d --name fastapi-container -p 80:8000 $APP_NAME
+                '''
             }
         }
     }
@@ -49,7 +59,6 @@ pipeline {
         }
     }
 }
-
 
 
 
