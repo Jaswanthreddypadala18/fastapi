@@ -14,6 +14,8 @@
    
 #   b) Explain about Authentication in FastAPI and explain how can you allow only admin to access student detais?
 
+#candidates FASTAPI#
+
 from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel, EmailStr, Field
 from sqlalchemy import create_engine, Column, Integer, String
@@ -216,3 +218,4 @@ def add_random_students(db: Session = Depends(get_db)):
     db.commit()
 
     return {"message": "3 Random Students Added"}
+
