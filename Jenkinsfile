@@ -2,6 +2,8 @@ pipeline {
 
     agent any
 
+
+
     environment {
         APP_NAME = "fastapi-app"
         DATABASE_URL = "mysql+pymysql://root:Jaswanth09@127.0.0.1:3306/candidates"
@@ -19,7 +21,7 @@ pipeline {
             steps {
                 sh 'python3 -m pip install --upgrade pip'
                 sh 'python3 -m pip install -r requirements.txt'
-                sh 'python3 -m pip install pytest'
+                sh 'python3 -m pip install pytest flake8'
                 sh 'python3 --version'
             }
         }
@@ -30,21 +32,27 @@ pipeline {
             }
         }
 
-        stage('Docker Build') {
+        stage('SonarQube Analysis') {
             steps {
-                sh 'docker build -t $APP_NAME .'
+                withSonarQubeEnv('sonarqube') {
+                    sh '''
+                    sonar-scanner \
+                    -Dsonar.projectKey=fastapi-app \
+                    -Dsonar.sources=. \
+                    -Dsonar.login=$SONAR_TOKEN
+                    '''
+                }
             }
         }
 
-        stage('Deploy') {
+        stage('Quality Gate') {
             steps {
-                sh '''
-                docker stop fastapi-container || true
-                docker rm fastapi-container || true
-                docker run -d --name fastapi-container -p 80:8000 $APP_NAME
-                '''
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
             }
         }
+
     }
 
     post {
@@ -59,12 +67,3 @@ pipeline {
         }
     }
 }
-
-
-
-
-
-
-
-
-
