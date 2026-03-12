@@ -39,7 +39,7 @@ pipeline {
                     sonar-scanner \
                     -Dsonar.projectKey=fastapi-app \
                     -Dsonar.sources=. \
-                    -Dsonar.login=$SONAR_TOKEN
+                    
                     '''
                 }
             }
@@ -58,4 +58,5 @@ pipeline {
         }
     }
 }
+
 
